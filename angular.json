@@ -13,6 +13,8 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "outputPath": "dist/movie-catalog",
+            "baseHref": "/movie-catalog/",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"

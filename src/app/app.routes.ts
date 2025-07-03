@@ -7,4 +7,5 @@ export const routes: Routes = [
   { path: '', component: MovieListComponent },
   { path: 'movie/:id', component: MovieDetail },
   { path: 'favorites', component: Favorites },
+  { path: '**', redirectTo: '', pathMatch: 'full' }, 
 ];
