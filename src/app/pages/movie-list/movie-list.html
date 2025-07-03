@@ -1,0 +1,58 @@
+<h1>Каталог фильмов</h1>
+
+<!-- 🔗 Кнопка "Избранное" -->
+<a routerLink="/favorites" class="favorites-link">Перейти в избранное</a>
+
+<!-- 🔍 Поиск и фильтры -->
+<div class="filters">
+  <input
+    type="text"
+    [(ngModel)]="searchTerm"
+    placeholder="Поиск по названию..."
+    (input)="onSearch()"
+  />
+
+  <select [(ngModel)]="selectedGenre" (change)="fetchMovies()">
+    <option value="">Все жанры</option>
+    <option *ngFor="let genre of genres" [value]="genre.id">
+      {{ genre.name }}
+    </option>
+  </select>
+
+  <select [(ngModel)]="selectedYear" (change)="fetchMovies()">
+    <option value="">Любой год</option>
+    <option *ngFor="let year of getYears()">{{ year }}</option>
+  </select>
+
+  <select [(ngModel)]="selectedRating" (change)="fetchMovies()">
+    <option value="">Любой рейтинг</option>
+    <option *ngFor="let r of getRatings()">От {{ r }}</option>
+  </select>
+
+  <select [(ngModel)]="selectedSort" (change)="fetchMovies()">
+    <option value="">Сортировка: по популярности</option>
+    <option value="title">По названию (А-Я)</option>
+    <option value="year">По году (новые)</option>
+    <option value="rating">По рейтингу</option>
+  </select>
+</div>
+
+<!-- ⏳ Загрузка -->
+<div *ngIf="loading">Загрузка фильмов...</div>
+
+<!-- 🎬 Список фильмов -->
+<div class="movies-grid" *ngIf="!loading">
+  <a class="movie-card" *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]">
+    <img
+      [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://via.placeholder.com/500x750?text=Нет+постера'"
+      alt="{{ movie.title }}"
+    />
+    <div class="movie-info">
+      <div class="movie-title">{{ movie.title }}</div>
+      <div class="movie-meta">
+        Год: {{ movie.release_date?.split('-')[0] || '—' }}<br />
+        Рейтинг: {{ movie.vote_average || '—' }}
+      </div>
+    </div>
+  </a>
+</div>

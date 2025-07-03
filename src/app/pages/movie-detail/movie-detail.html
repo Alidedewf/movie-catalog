@@ -1,0 +1,25 @@
+<div *ngIf="loading">Загрузка...</div>
+
+<div *ngIf="!loading && movie" class="movie-detail-container">
+  <img
+    class="poster"
+    [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://via.placeholder.com/500x750?text=Нет+постера'"
+    alt="{{ movie.title }}"
+  />
+
+  <div class="info">
+    <h2>{{ movie.title }}</h2>
+
+    <p class="meta">
+      <span><strong>Год:</strong> {{ movie.release_date?.split('-')[0] || '—' }}</span> •
+      <span><strong>Рейтинг:</strong> {{ movie.vote_average || '—' }} ★</span>
+    </p>
+
+    <p><strong>Жанры:</strong> {{ getGenreNames() }}</p>
+
+    <p><strong>Описание:</strong></p>
+    <p>{{ movie.overview || 'Описание недоступно.' }}</p>
+
+    <button (click)="addToFavorites()">Добавить в избранное</button>
+  </div>
+</div>

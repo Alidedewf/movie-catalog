@@ -1,0 +1,24 @@
+<h1 class="page-title">⭐ Избранное</h1>
+
+<div *ngIf="favorites.length === 0" class="empty">
+  <p>У вас пока нет избранных фильмов.</p>
+</div>
+
+<div class="grid" *ngIf="favorites.length > 0">
+  <div class="card" *ngFor="let movie of favorites">
+    <a [routerLink]="['/movie', movie.id]">
+      <img
+        [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://via.placeholder.com/500x750?text=Нет+постера'"
+        alt="{{ movie.title }}"
+      />
+    </a>
+    <div class="card-content">
+      <div class="title">{{ movie.title }}</div>
+      <div class="meta">
+        {{ movie.release_date?.split('-')[0] || '—' }} • ★
+        {{ movie.vote_average || '—' }}
+      </div>
+      <button (click)="removeFromFavorites(movie.id)">Удалить</button>
+    </div>
+  </div>
+</div>
